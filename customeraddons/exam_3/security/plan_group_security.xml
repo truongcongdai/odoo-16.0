@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Menu -->
+        <record id="module_category_plan_sale_order" model="ir.module.category">
+            <field name="name">Plan Sale Order</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <record id="plan_sale_order_group_planner" model="res.groups">
+            <field name="name">Group Planner Sale Order</field>
+            <field name="category_id" ref="module_category_plan_sale_order"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="plan_sale_order_group_reviewer" model="res.groups">
+            <field name="name">Group Plan Reviewer</field>
+            <field name="category_id" ref="module_category_plan_sale_order"/>
+            <field name="implied_ids" eval="[(4, ref('plan_sale_order_group_planner'))]"/>
+        </record>
+
+        <!--Only see their plan sale orders-->
+        <record id="plan_sale_order_planner" model="ir.rule">
+            <field name="model_id" ref="model_plan_sale_order"/>
+            <field name="groups" eval="[(4, ref('plan_sale_order_group_planner'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+        </record>
+
+        <!--See all plan sale orders or all planners-->
+        <record id="plan_sale_order_reviewer" model="ir.rule">
+            <field name="model_id" ref="model_plan_sale_order"/>
+            <field name="groups" eval="[(4,ref('plan_sale_order_group_reviewer'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

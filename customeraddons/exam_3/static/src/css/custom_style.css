@@ -1,0 +1,14 @@
+.name_plan_sale_order {
+    color: dodgerblue;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.quotation {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.content_quotation {
+    font-style: italic;
+}
