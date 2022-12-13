@@ -9,7 +9,7 @@
     'depends': ['base','purchase','hr'],
     'data': [
         'security/groups.xml',
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/inherit_purchase_order.xml',
         'views/inherit_hr_department.xml',
         'views/limit_purchase_order.xml',

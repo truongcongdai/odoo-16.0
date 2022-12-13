@@ -31,7 +31,7 @@ class PlanSaleOder(models.Model):
         if self.state == 'new':
             if self.approve_id.approver:
                 self.state = 'send'
-                self.message_post(subject='Send to approver', body=mess_send, message_type='notification', partner_ids=self.approve_id.approver.ids)
+                self.message_post(subject='Send to approver', body=mess_send)
             else:
                 raise UserError('This plan does not have any approvers')
         else:
@@ -65,5 +65,5 @@ class PlanSaleOder(models.Model):
         for r in self:
             r.check_send = False
             if r.create_uid:
-                if r.create_uid == current_user_ui:
+                if current_user_ui == int(r.create_uid):
                     r.check_send = True
