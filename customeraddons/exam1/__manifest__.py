@@ -25,6 +25,7 @@
         'views/inherit_sales_team.xml',
         'views/plan_sale_order.xml',
         'views/indicator_evaluation.xml',
+        'views/inherit_sale_order.xml',
         'wizard/report_indicator_evaluation.xml',
         'wizard/report_inherit_crm_lead.xml',
     ],

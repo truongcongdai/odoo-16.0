@@ -5,13 +5,20 @@
             <field name="name">report_purchase_view_form</field>
             <field name="model">report.purchase</field>
             <field name="arch" type="xml">
-                <form string="Report Purchase Form">
+                <form>
                     <sheet>
                         <group>
-                            <field name="month"/>
-                            <field name="department" widget="many2many_checkboxes"/>
-
+                            <group>
+                                <field name="month"/>
+                            </group>
+                            <group>
+                                <field name="department" widget="many2many_checkboxes"/>
+                            </group>
                         </group>
+                        <footer>
+                            <button string="Confirm" class="btn-primary" name="btn_confirm" type="object"/>
+                            <button special="cancel" string="Cancel" class="btn-default"/>
+                        </footer>
                     </sheet>
                 </form>
             </field>
@@ -21,11 +28,13 @@
             <field name="name">Report Purchase</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">report.purchase</field>
-            <field name="view_type">form</field>
+            <field name="binding_model_id" ref="model_hr_department"/>
             <field name="view_mode">tree,form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="report_purchase_view_form"/>
         </record>
 
-        <menuitem name="Report Purchase" id="report_purchase_menu" parent="hr.menu_hr_root" action="report_purchase_act_window"/>
+        <menuitem name="Report Purchase" id="report_purchase_menu" parent="hr.menu_hr_root"  action="report_purchase_act_window"/>
 
     </data>
 </odoo>

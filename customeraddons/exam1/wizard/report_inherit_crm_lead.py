@@ -14,8 +14,6 @@ class ReportInheritCrmLead(models.TransientModel):
     # Filter data by sale_team, by selected month or by current month
     def btn_confirm(self):
         if self.month and self.sale_team:
-            if self.month == str(date.today().month):
-                self.month = str(date.today().month)
             sale_teams_id = self.sale_team.mapped('id')
             context = {
                 'name': _("Detail Report"),
@@ -24,10 +22,9 @@ class ReportInheritCrmLead(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
                 'target': 'current',
-                'domain': [('sales_team_id', 'in', sale_teams_id), ('create_month', '=', self.month), ],
+                'domain': [('team_id', 'in', sale_teams_id), ('create_month', '=', self.month)],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
-
         else:
             context = {
                 'name': _("Detail Report"),
@@ -36,6 +33,7 @@ class ReportInheritCrmLead(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
                 'target': 'current',
+                'domain': [('create_month', '=', self.month)],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
         return context

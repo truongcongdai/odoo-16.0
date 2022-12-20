@@ -4,18 +4,18 @@ from odoo.exceptions import ValidationError
 class CrmLead(models.Model):
     _inherit = 'crm.lead'
 
-    sales_team_id = fields.Many2one('crm.team', string='Sales Team')
+    sale_team = fields.Many2one('crm.team', string='Sales Team')
     minimum_revenue = fields.Float(string='Minimum Revenue (VAT)')
 
     check_priority = fields.Boolean(defult=False, compute='_compute_check_priority')
     check_edit_minimum_revenue = fields.Boolean(default=True, compute='_compute_check_edit_minimum_revenue')
 
-    actual_revenue = fields.Float(string='Actual Revenue', compute='_compute_real_revenue', store=False)
+    actual_revenue = fields.Float(string='Actual Revenue', compute='_compute_actual_revenue', store=False)
     create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
     # check_selespreson = fields.Boolean(default = False)
 
-    # Calculate real_revenue = amount_total corresponding to the opportunity
-    def _compute_real_revenue(self):
+    # Tinh actual_revenue = tong amount_total_opportunity
+    def _compute_actual_revenue(self):
         for rec in self:
             if rec.id:
                 amount_total = self.env['sale.order'].search([('opportunity_id', '=', rec.id)])
@@ -36,6 +36,7 @@ class CrmLead(models.Model):
         if count_quotations > 0:
             self.check_edit_minimum_revenue = False
 
+    #check priority = very high va tk co thuoc nhom leader
     @api.depends('priority')
     def _compute_check_priority(self):
         for r in self:

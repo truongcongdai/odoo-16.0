@@ -13,8 +13,9 @@
         'views/inherit_purchase_order.xml',
         'views/inherit_hr_department.xml',
         'views/limit_purchase_order.xml',
+        'wizard/report_purchase.xml',
     ],
     'demo':[
-        'demo/inherit_hr_department_demo'
+        'demo/inherit_hr_department_demo.xml'
     ]
 }

@@ -53,7 +53,7 @@
                 </xpath>
 
                 <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="sales_team_id"/>
+                    <field name="team_id"/>
                     <field name="minimum_revenue" widget="monetary"/>
                     <field name="actual_revenue" widget="monetary"/>
                 </xpath>

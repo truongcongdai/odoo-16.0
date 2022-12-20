@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sale_purchase_email_template" model="mail.template">
+            <field name="name">Email Template</field>
+            <field name="model_id" ref="exam3.model_sales_purchase"/>
+            <field name="email_from">${ctx['email_from'}</field>
+            <field name="email_to">${ctx['email_to'}</field>
+            <field name="subject">Báo cáo dữ liệu bán hàng và mua hàng</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+
+                <h3>I. Kinh doanh</h3>
+                <table width="800" cellspacing="1" cellpadding="4" border="1" height="75">
+                    <thead>
+                        <tr>
+                            <th>sales team name</th>
+                            <th>actual revenue</th>
+                            <th>actual revenue difference compared to current month target</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="object.get_record_sales_team()" t-as="item">
+                            <td><t t-esc="item['name']"/></td>
+                            <td><t t-esc="item['actual_revenue']"/></td>
+                            <td><t t-esc="item['revenue_difference']"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <h3>II. Mua hàng</h3>
+                <table width="800" cellspacing="1" cellpadding="4" border="1" height="75">
+                    <thead>
+                        <tr>
+                            <th>department name</th>
+                            <th>actual target</th>
+                            <th>actual spending difference compared to the limit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="object.get_record_department()" t-as="item">
+                            <td><t t-esc="item['name']"/></td>
+                            <td><t t-esc="item['actual_revenue']"/></td>
+                            <td><t t-esc="item['revenue_difference']"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            ]]>
+            </field>
+        </record>
+</odoo>

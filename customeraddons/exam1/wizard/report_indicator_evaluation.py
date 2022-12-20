@@ -12,8 +12,6 @@ class ReportIndicatorEvaluation(models.TransientModel):
         string='Month', default=str(date.today().month), required=True)
 
     def btn_confirm(self):
-
-
         if self.month and self.sale_team:
             if self.month == str(date.today().month):
                 self.month = str(date.today().month)
@@ -32,11 +30,10 @@ class ReportIndicatorEvaluation(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('exam1.indicator_evaluation_tree_view').id,
                 'target': 'current',
-                'domain': [('sale_team', 'in', sale_teams_id), ('month', '=', int(self.month))],
+                'domain': [('sale_team', 'in', sale_teams_id), ('month', '=', self.month)],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
-
-        else:
+        elif self.month:
             context = {
                 'name':  _("Detail Report"),
                 'view_mode': 'tree',
@@ -44,6 +41,7 @@ class ReportIndicatorEvaluation(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('exam1.indicator_evaluation_tree_view').id,
                 'target': 'current',
+                'domain': [('month', '=', self.month)],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
         return context

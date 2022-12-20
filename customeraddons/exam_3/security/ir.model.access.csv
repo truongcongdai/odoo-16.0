@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-exam_3.access_plan_sale_order_planner,access_plan_sale_order,exam_3.model_plan_sale_order,plan_sale_order_group_planner,1,1,1,1
-exam_3.access_plan_sale_order_reviewer,access_plan_sale_order,exam_3.model_plan_sale_order,plan_sale_order_group_reviewer,1,1,1,1
-exam_3.access_plan_sale_order_list_reviewer,access_plan_sale_order_list,exam_3.model_plan_sale_order_list,plan_sale_order_group_reviewer,1,1,1,1
-exam_3.access_plan_sale_order_list_planner,access_plan_sale_order_list,exam_3.model_plan_sale_order_list,plan_sale_order_group_planner,1,1,1,1

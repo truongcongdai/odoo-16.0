@@ -11,7 +11,7 @@ class IndicatorEvaluationReport(models.Model):
         for rec in self:
             if rec.sale_team:
                 amount_untaxed_opportunity = self.env['sale.order'].search(
-                    [('team_id', '=', rec.sale_team.mapped('id')), ('opportunity_id', '!=', False)])
+                    [('team_id', 'in', rec.sale_team.mapped('id'))])
                 amount_untaxed = amount_untaxed_opportunity.mapped('amount_untaxed')
                 rec.actual_revenue = sum(amount_untaxed)
 
@@ -20,7 +20,7 @@ class IndicatorEvaluationReport(models.Model):
     def _compute_revenue_targets(self):
         for rec in self:
             if rec.month:
-                month_sales_result = self.env['crm.team'].search([('id', '=', rec.sale_team.mapped('id'))])
+                month_sales_result = self.env['crm.team'].search([('id', 'in', rec.sale_team.mapped('id'))])
                 month_sales = month_sales_result.mapped(lambda res: (res.january, res.february,
                                                                      res.march, res.april, res.may,
                                                                      res.june, res.july, res.august,
