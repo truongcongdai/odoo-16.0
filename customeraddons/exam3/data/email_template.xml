@@ -9,9 +9,9 @@
            <field name="body_html"><![CDATA[
 
             <h3>I. Kinh Doanh </h3>
-            <table width="850" cellspacing="1" cellpadding="4" border="1" height="70">
+            <table width="850" cellspacing="1" cellpadding="4" border="1" height="25">
                 <thead>
-                    <tr>
+                    <tr height="50">
                        <th>Tên nhóm hàng </th>
                        <th>Doanh thu thực tế </th>
                        <th>Chênh lệch doanh thu thực tế so với tháng hiện tại </th>
@@ -32,9 +32,9 @@
                 </tbody>
             </table>
             <h3>II. Mua hàng </h3>
-            <table width="850" cellspacing="1" cellpadding="4" border="1" height="70">
+            <table width="850" cellspacing="1" cellpadding="4" border="1" height="25">
                 <thead>
-                    <tr>
+                    <tr height="50">
                        <th>Tên phòng ban</th>
                        <th>Chi tiêu thực tế </th>
                        <th>Chênh lệch chi tiêu thực tế so với hạn mức </th>

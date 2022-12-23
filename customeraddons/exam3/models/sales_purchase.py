@@ -10,22 +10,10 @@ class SalesPurchase(models.Model):
 
         email_accountant = self.env['res.partner'].search([('id','in', res_users_id)]).mapped('email')
 
-        # indicator_evaluation_record = self.env['indicator.evaluation'].search([])
-        # sales_team = indicator_evaluation_record.mapped('sale_team')
-        # sales_team_name = sales_team.mapped('name')
-        # actual_revenue = indicator_evaluation_record.mapped('actual_revenue')
-        # revenue_difference = indicator_evaluation_record.mapped('revenue_difference')
-
-        # hr_department_record = self.env['hr.department'].search([])
-        # department_name = hr_department_record.mapped('name')
-        # department_actual_revenue = hr_department_record.mapped('actual_revenue')
-        # department_revenue_defference = hr_department_record.mapped('revenue_difference')
-
-        # template_obj = self.env['mail.template'].sudo().search([('model', 'like', 'sales.purchase')], limit=1)
-
         indicator_evaluation_record = self.env['indicator.evaluation'].search([])
         records_sale = []
         for i in indicator_evaluation_record:
+            print(i.mapped('revenue_difference'))
             tickets_sale = {}
             if i:
                 tickets_sale['name'] = i.sale_team.name
@@ -52,5 +40,3 @@ class SalesPurchase(models.Model):
         ctx['attendee'] = ''
         template = self.env.ref('exam3.sale_purchase_email_template')
         template.with_context(ctx).send_mail(self.id, force_send=True, raise_exception=False)
-
-    # self.env['mail.mail'].create(mail_values).send()
