@@ -4,18 +4,12 @@ from odoo.exceptions import UserError
 class PlanSaleOder(models.Model):
     _name = 'plan.sale.order'
     _inherit = ['mail.thread']
-
     name= fields.Char(required=True)
     quotation = fields.Many2one('sale.order',string="Quotation", readonly=True, required=True)
     content = fields.Text(string="Content" ,required= True)
-
-    state = fields.Selection(
-        [('new', 'New'),
-         ('send', 'Send'),
-         ('approve', 'Approve'),
-         ('refuse', 'Refuse')])
+    state = fields.Selection([('new', 'New'),('send', 'Send'),('approve', 'Approve'),('refuse', 'Refuse')])
     approve_id = fields.One2many('approver.list', 'sale_order_id' , string='Aprrover')
-    check_confirm = fields.Selection([('yes','Yes'), ('no', 'No')], string="Check Confirm")
+    is_confirm = fields.Boolean()
     check_send = fields.Boolean(compute='_compute_check_send')
 
     def btn_new(self):
@@ -40,7 +34,7 @@ class PlanSaleOder(models.Model):
 
         mess_approve = "The new plan of %s has been approved on %s" % (self.create_uid.name, fields.Datetime.now())
 
-        if self.check_confirm == 'yes':
+        if self.is_confirm == True:
             if self.approve_id.approver:
                 self.state = 'approve'
                 self.message_post(subject='Approve New Plan', body=mess_approve)
@@ -52,7 +46,7 @@ class PlanSaleOder(models.Model):
 
         mess_refuse = "The new plan of %s has been refused on %s" % (self.create_uid.name, fields.Datetime.now())
 
-        if self.check_confirm =='no':
+        if self.is_confirm ==False:
             self.state ='refuse'
             self.approve_id.approver_status='not approved yet'
             self.message_post(subject='Refuse New Plan', body=mess_refuse)

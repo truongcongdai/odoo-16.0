@@ -12,7 +12,9 @@ class CrmLead(models.Model):
 
     actual_revenue = fields.Float(string='Actual Revenue', compute='_compute_actual_revenue', store=False)
     create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
-    # check_selespreson = fields.Boolean(default = False)
+
+    # user_id = fields.Many2one(
+    #     'res.users', compute='_onchange_user_id')
 
     # Tinh actual_revenue = tong amount_total_opportunity
     def _compute_actual_revenue(self):
@@ -43,11 +45,15 @@ class CrmLead(models.Model):
             r.check_priority = False
             if r.priority == '3' and not r.user_has_groups('exam1.group_lead_employee'):
                 r.check_priority = True
-
-    def btn_leader_lost(self):
-        return super(CrmLead, self).action_set_lost()
-
     @api.constrains('minimum_revenue')
     def _check_minimum_revenue(self):
         if self.minimum_revenue <= 0:
             raise models.ValidationError('Minimum revenue > 0')
+
+    @api.onchange('user_id')
+    def _onchange_user_id(self):
+        current_user_id = self.env.uid
+        group_staff_id = int(self.env['crm.team.member'].search([('user_id','=',current_user_id)]).crm_team_id)
+        sales_staff_in_group = self.env['crm.team.member'].search([('crm_team_id','=',group_staff_id)]).user_id.ids
+        if not self.user_has_groups('exam1.group_lead_employee'):
+            return {'domain': {'user_id': [('id', 'in', sales_staff_in_group)]}}

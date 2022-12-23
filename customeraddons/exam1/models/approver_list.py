@@ -16,7 +16,7 @@ class ApproverList(models.Model):
         states = self.sale_order_id.approve_id.mapped('approver_status')
         if all([state == 'approve'] for state in states):
             self.message_post(subject='Approve New Plan', body=mees_approve)
-            self.sale_order_id.check_confirm = 'yes'
+            self.sale_order_id.is_confirm = True
 
     def btn_refuse(self):
 
@@ -26,4 +26,4 @@ class ApproverList(models.Model):
         states = self.sale_order_id.approve_id.mapped('approver_status')
         if all([state == 'refuse'] for state in states):
             self.message_post(subject='Refuse New Plan', body=mess_refuse)
-            self.sale_order_id.check_confirm ='no'
+            self.sale_order_id.is_confirm =False
