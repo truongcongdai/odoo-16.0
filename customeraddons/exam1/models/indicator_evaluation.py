@@ -3,7 +3,7 @@ class IndicatorEvaluationReport(models.Model):
     _name = 'indicator.evaluation'
 
     sale_team = fields.Many2one('crm.team', string="Nhóm bán hàng")
-    actual_revenue = fields.Float(string="Doanh thu thực tế",compute="_compute_actual_revenue", store=False)
+    actual_revenue = fields.Float(string="Doanh thu thực tế",compute="_compute_actual_revenue")
     month = fields.Integer('Month', store=True)
     revenue_targets = fields.Float(string="Chỉ tiêu doanh thu", compute="_compute_revenue_targets", store=True)
 

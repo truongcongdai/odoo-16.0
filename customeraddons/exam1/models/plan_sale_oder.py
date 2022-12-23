@@ -22,7 +22,7 @@ class PlanSaleOder(models.Model):
         %(fields.Datetime.now(), self.create_uid.name)
 
 
-        if self.state == 'new':
+        if self.state == 'new' or self.state == 'refuse':
             if self.approve_id.approver:
                 self.state = 'send'
                 self.message_post(subject='Send to approver', body=mess_send)

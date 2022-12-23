@@ -12,7 +12,7 @@
                     groups="exam1.group_staff_employee"/>
 
                     <button name="btn_send" type="object" string="Send" class="oe_highlight"
-                    attrs="{'invisible':[('state', 'in' ,('send','approve', 'refuse')), ('check_send','=',True)]}"
+                    attrs="{'invisible':[('state', 'in' ,('send','approve')), ('check_send','=',True)]}"
                     groups="exam1.group_staff_employee"/>
 
                     <button name="btn_confirm_approve" type="object" string="Approve" class="oe_highlight"
