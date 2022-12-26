@@ -15,7 +15,7 @@ class IndicatorEvaluationReport(models.Model):
                 amount_untaxed = amount_untaxed_opportunity.mapped('amount_untaxed')
                 rec.actual_revenue = sum(amount_untaxed)
 
-    # Get value month revenue to month of report
+    # Tính mục tiêu doanh thu tháng để report
     @api.depends('month')
     def _compute_revenue_targets(self):
         for rec in self:

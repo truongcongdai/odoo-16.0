@@ -34,7 +34,7 @@ class PlanSaleOder(models.Model):
 
         mess_approve = "The new plan of %s has been approved on %s" % (self.create_uid.name, fields.Datetime.now())
 
-        if self.is_confirm == True:
+        if self.is_confirm:
             if self.approve_id.approver:
                 self.state = 'approve'
                 self.message_post(subject='Approve New Plan', body=mess_approve)
@@ -46,18 +46,16 @@ class PlanSaleOder(models.Model):
 
         mess_refuse = "The new plan of %s has been refused on %s" % (self.create_uid.name, fields.Datetime.now())
 
-        if self.is_confirm ==False:
+        if not self.is_confirm:
             self.state ='refuse'
             self.approve_id.approver_status='not approved yet'
             self.message_post(subject='Refuse New Plan', body=mess_refuse)
         else:
             raise UserError('Cannot confirm this approve. Please check your data.')
-
+    #chỉ người tạo mới có thể nhìn thấy nút send
     @api.depends('create_uid')
     def _compute_check_send(self):
         current_user_ui = self.env.uid
-        for r in self:
-            r.check_send = False
-            if r.create_uid:
-                if current_user_ui == int(r.create_uid):
-                    r.check_send = True
+        self.check_send = False
+        if current_user_ui != int(self.create_uid):
+            self.check_send = True

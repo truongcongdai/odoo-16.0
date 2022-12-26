@@ -13,16 +13,8 @@ class ReportIndicatorEvaluation(models.TransientModel):
 
     def btn_confirm(self):
         if self.month and self.sale_team:
-            if self.month == str(date.today().month):
-                self.month = str(date.today().month)
+            self.month = str(date.today().month)
             sale_teams_id = self.sale_team.mapped('id')
-            self.env['indicator.evaluation'].sudo().search([]).unlink()
-            for id in sale_teams_id:
-                self.env['indicator.evaluation'].sudo().create({
-                    'sale_team': id,
-                    'month': int(self.month)
-                })
-
             context = {
                 'name':  _("Detail Report"),
                 'view_mode': 'tree',

@@ -32,7 +32,7 @@ class CrmLead(models.Model):
                 rec.create_month = create_month[1]
 
 
-    #check priority = very high va tk co thuoc nhom leader
+    #check priority = very high va tk có thuộc nhóm leader
     @api.depends('priority')
     def _compute_check_priority(self):
         for r in self:
@@ -44,7 +44,7 @@ class CrmLead(models.Model):
         if self.minimum_revenue <= 0:
             raise models.ValidationError('Minimum revenue > 0')
 
-    # @api.onchange('user_id')
+    #chỉ assign cho nhân viên cùng nhóm còn leader assign all
     def _onchange_user_id(self):
         current_user_id = self.env.uid
         group_staff_id = self.env['crm.team.member'].search([('user_id','=',current_user_id)]).crm_team_id.id

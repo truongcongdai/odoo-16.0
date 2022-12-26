@@ -9,6 +9,7 @@
                     <sheet>
                         <group>
                             <field name="sale_team"/>
+                            <field name="month"/>
                             <field name="actual_revenue" widget="monetary"/>
                             <field name="revenue_targets"/>
                         </group>
@@ -24,7 +25,6 @@
                 <tree string="Indicator Evaluation Report">
                     <field name="sale_team"/>
                     <field name="actual_revenue"/>
-                    <field name="month"/>
                     <field name="revenue_targets"/>
                 </tree>
             </field>
