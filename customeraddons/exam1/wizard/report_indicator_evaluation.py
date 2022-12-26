@@ -13,7 +13,6 @@ class ReportIndicatorEvaluation(models.TransientModel):
 
     def btn_confirm(self):
         if self.month and self.sale_team:
-            self.month = str(date.today().month)
             sale_teams_id = self.sale_team.mapped('id')
             context = {
                 'name':  _("Detail Report"),
