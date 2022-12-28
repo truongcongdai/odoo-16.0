@@ -7,13 +7,12 @@ class SalesPurchase(models.Model):
         accountant_group_record = self.env['res.groups'].sudo().search([('name', '=', 'Accountant')])
         #lay ra id cua thuoc nhom Accountant cua res_partner
         res_users_id = accountant_group_record.users.mapped('partner_id').mapped('id')
-
+        #lấy ra email của accountant
         email_accountant = self.env['res.partner'].search([('id','in', res_users_id)]).mapped('email')
 
         indicator_evaluation_record = self.env['indicator.evaluation'].search([])
         records_sale = []
         for i in indicator_evaluation_record:
-            print(i.mapped('revenue_difference'))
             tickets_sale = {}
             if i:
                 tickets_sale['name'] = i.sale_team.name

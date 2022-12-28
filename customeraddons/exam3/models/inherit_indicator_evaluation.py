@@ -9,12 +9,13 @@ class InheritIndicatorEvaluation(models.Model):
         current_month = date.today().month
 
         for rec in self:
+            month_sales_result = self.env['crm.team'].search([('id', 'in', rec.sale_team.mapped('id'))])
+            month_sales = month_sales_result.mapped(lambda res: (res.january, res.february,
+                                                                 res.march, res.april, res.may,
+                                                                 res.june, res.july, res.august,
+                                                                 res.september, res.october,
+                                                                 res.november, res.december))
             if rec.actual_revenue:
-                month_sales_result = self.env['crm.team'].search([('id', 'in', rec.sale_team.mapped('id'))])
-                month_sales = month_sales_result.mapped(lambda res: (res.january, res.february,
-                                                                     res.march, res.april, res.may,
-                                                                     res.june, res.july, res.august,
-                                                                     res.september, res.october,
-                                                                     res.november, res.december))
-
                 rec.revenue_difference = rec.actual_revenue - month_sales[0][current_month - 1]
+            else:
+                rec.revenue_difference = 0 - month_sales[0][current_month - 1]

@@ -23,10 +23,7 @@ class CrmLead(models.Model):
     def _compute_create_month(self):
         for rec in self:
             if rec.create_date:
-                create_date = str(rec.create_date)
-                create_month = create_date.split("-")
-                rec.create_month = create_month[1]
-
+                rec.create_month = rec.create_date.month
 
     #check priority = very high va tk có thuộc nhóm leader
     @api.depends('priority')

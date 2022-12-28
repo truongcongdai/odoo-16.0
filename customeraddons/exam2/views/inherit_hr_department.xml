@@ -21,7 +21,7 @@
                 <xpath expr="//field[@name='display_name']" position="after">
                     <field name="spending_limit_month" widget="monetary"/>
                     <field name="actual_revenue" widget="monetary"/>
-                    <field name="create_month"/>
+<!--                    <field name="create_month"/>-->
                 </xpath>
 
                 <xpath expr="//field[@name='manager_id']" position="attributes">
