@@ -19,9 +19,7 @@ class ApproverList(models.Model):
             self.sale_order_id.is_confirm = True
 
     def btn_refuse(self):
-
         mess_refuse = "approval status was denied on %s" % (fields.Datetime.now())
-
         self.approver_status = 'refuse'
         states = self.sale_order_id.approve_id.mapped('approver_status')
         if all([state == 'refuse'] for state in states):

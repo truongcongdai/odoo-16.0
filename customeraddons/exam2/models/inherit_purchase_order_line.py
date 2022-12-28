@@ -8,25 +8,21 @@ class InheritPurchaseOrderLine(models.Model):
 
     @api.depends('product_id')
     def _compute_supplier(self):
-        min_price_type_int = 0
         for r in self:
             if r.product_id:
-                #lay ra ban ghi co supplier gia nho nhat
-                record_min_price_supplier = self.env['product.supplierinfo'].search(
-                    [('product_tmpl_id', '=', int(r.product_id.product_tmpl_id))], order='price asc', limit=1)
-                min_price_type_list = record_min_price_supplier.mapped('price')
-
-                #conver min_price_type_list to min_price_type_int
-                for i in min_price_type_list:
-                    min_price_type_int = i
+                #lay ra supplier gia nho nhat
+                min_price = self.env['product.supplierinfo'].search(
+                    [('product_tmpl_id', '=', int(r.product_id.product_tmpl_id))], order='price asc', limit=1).price
 
                 #lay ra ban ghi co product_tmpl_id=product_id.product_tmpl_id va gia nho nhat
                 price_supplier_line = self.env['product.supplierinfo'].search(
-                    [('product_tmpl_id', '=' ,int(r.product_id.product_tmpl_id)),('price','=',min_price_type_int)], order='price asc')
+                    [('product_tmpl_id', '=' ,int(r.product_id.product_tmpl_id)),('price','=',min_price)], order='price asc')
+                #lấy ra tên nhà san xuất có dạng list
                 price_supplier = price_supplier_line.mapped('partner_id.name')
                 if len(price_supplier) > 1:
+                    #lấy ra nhà sản xuất có thời gian thấp nhất
                     delivery_time = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id' , '=' , int(r.product_id.product_tmpl_id)),('price','=',min_price_type_int)], order='delay asc' , limit=1)
+                        [('product_tmpl_id' , '=' , int(r.product_id.product_tmpl_id)),('price','=',min_price)], order='delay asc' , limit=1)
                     shortest_delivery_time = delivery_time.mapped('partner_id.name')
                     r.supplier = ''.join(shortest_delivery_time)
                 else:

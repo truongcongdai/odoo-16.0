@@ -6,7 +6,7 @@ class LimitPurchaseOrder(models.Model):
 
     name= fields.Many2one('res.users',string="Staff's Name")
     order_limit = fields.Float(string="Order Limit")
-
+    #kiểm tra order limit nếu < 0 thì raise lỗi
     @api.constrains('order_limit')
     def _check_order_limit(self):
         if self.order_limit <= 0:

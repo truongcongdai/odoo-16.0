@@ -11,7 +11,7 @@ class ReportInheritCrmLead(models.TransientModel):
         string='Month', default= str(date.today().month), required=True)
     sale_team = fields.Many2many('crm.team', string='Sale Team')
 
-    # Filter data by sale_team, by selected month or by current month
+    # Lọc dữ liệu theo sale_team, theo tháng đã chọn hoặc theo tháng hiện tại
     def btn_confirm(self):
         if self.month and self.sale_team:
             sale_teams_id = self.sale_team.mapped('id')

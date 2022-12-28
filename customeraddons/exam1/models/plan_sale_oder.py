@@ -17,11 +17,7 @@ class PlanSaleOder(models.Model):
         self.approve_id.approver_status = 'not approved yet'
 
     def btn_send(self):
-
-        mess_send = 'the new plan has been sent to the person in charge by email on %s . Created by %s' \
-        %(fields.Datetime.now(), self.create_uid.name)
-
-
+        mess_send = 'the new plan has been sent to the person in charge by email on %s . Created by %s' %(fields.Datetime.now(), self.create_uid.name)
         if self.state == 'new' or self.state == 'refuse':
             if self.approve_id.approver:
                 self.state = 'send'
@@ -31,9 +27,7 @@ class PlanSaleOder(models.Model):
         else:
             raise UserError('Cannot send this approver')
     def btn_confirm_approve(self):
-
         mess_approve = "The new plan of %s has been approved on %s" % (self.create_uid.name, fields.Datetime.now())
-
         if self.is_confirm:
             if self.approve_id.approver:
                 self.state = 'approve'
@@ -43,9 +37,7 @@ class PlanSaleOder(models.Model):
         else:
             raise UserError('Cannot confirm this approve. Please check your data.')
     def btn_confirm_refuse(self):
-
         mess_refuse = "The new plan of %s has been refused on %s" % (self.create_uid.name, fields.Datetime.now())
-
         if not self.is_confirm:
             self.state ='refuse'
             self.approve_id.approver_status='not approved yet'

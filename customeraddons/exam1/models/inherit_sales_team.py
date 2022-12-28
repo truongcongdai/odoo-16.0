@@ -16,7 +16,7 @@ class SalesTeam(models.Model):
     october = fields.Float(string="Tháng 10")
     november = fields.Float(string="Tháng 11")
     december = fields.Float(string="Tháng 12")
-
+    #kiểm tra tháng nếu có giá trị < 0 thì raise lỗi
     @api.constrains('january','february','march','april','may','june','july','august','september','october','november','december')
     def _check_month(self):
         for r in self:

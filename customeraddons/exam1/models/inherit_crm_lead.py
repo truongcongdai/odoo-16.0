@@ -6,14 +6,10 @@ class CrmLead(models.Model):
 
     sale_team = fields.Many2one('crm.team', string='Sales Team')
     minimum_revenue = fields.Float(string='Minimum Revenue (VAT)')
-
     check_priority = fields.Boolean(defult=False, compute='_compute_check_priority')
-
     actual_revenue = fields.Float(string='Actual Revenue', compute='_compute_actual_revenue')
     create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
     quotation_count = fields.Integer(compute='_compute_sale_data', string="Number of Quotations")
-
-
 
     # Tinh actual_revenue = tong amount_total_opportunity
     def _compute_actual_revenue(self):
@@ -39,10 +35,11 @@ class CrmLead(models.Model):
             r.check_priority = False
             if r.priority == '3' and not r.user_has_groups('exam1.group_lead_employee'):
                 r.check_priority = True
+    #Kiểm tra minimum_revenue nếu nhỏ hơn 0 thì raise lỗi
     @api.constrains('minimum_revenue')
     def _check_minimum_revenue(self):
         if self.minimum_revenue <= 0:
-            raise models.ValidationError('Minimum revenue > 0')
+            raise ValidationError('Minimum revenue > 0')
 
     #chỉ assign cho nhân viên cùng nhóm còn leader assign all
     def _onchange_user_id(self):
