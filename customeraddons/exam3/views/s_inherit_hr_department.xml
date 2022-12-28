@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="hr.view_department_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='actual_revenue']" position="after">
-                    <field name="revenue_difference"/>
+                    <field name="revenue_difference" invisible="1"/>
                 </xpath>
             </field>
         </record>
