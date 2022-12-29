@@ -31,8 +31,7 @@ class InheritPurchaseOrder(models.Model):
     def btn_send(self):
         mess_send = "Confirmation request sent on %s" %(fields.Datetime.now())
         self.message_post(subject='Purchase Order New', body=mess_send)
-        for r in self:
-            r.check_send = True
+        self.check_send = True
 
 
 
