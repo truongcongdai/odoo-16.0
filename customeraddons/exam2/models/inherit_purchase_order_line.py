@@ -14,16 +14,13 @@ class InheritPurchaseOrderLine(models.Model):
                 min_price = self.env['product.supplierinfo'].search(
                     [('product_tmpl_id', '=', int(r.product_id.product_tmpl_id))], order='price asc', limit=1).price
 
-                #lay ra ban ghi co product_tmpl_id=product_id.product_tmpl_id va gia nho nhat
-                price_supplier_line = self.env['product.supplierinfo'].search(
-                    [('product_tmpl_id', '=' ,int(r.product_id.product_tmpl_id)),('price','=',min_price)], order='price asc')
-                #lấy ra tên nhà san xuất có dạng list
-                price_supplier = price_supplier_line.mapped('partner_id.name')
+                #lay ra tên nhà san xuất co product_tmpl_id=product_id.product_tmpl_id va gia nho nhat
+                price_supplier = self.env['product.supplierinfo'].search(
+                    [('product_tmpl_id', '=' ,int(r.product_id.product_tmpl_id)),('price','=',min_price)], order='price asc').mapped('partner_id.name')
                 if len(price_supplier) > 1:
-                    #lấy ra nhà sản xuất có thời gian thấp nhất
-                    delivery_time = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id' , '=' , int(r.product_id.product_tmpl_id)),('price','=',min_price)], order='delay asc' , limit=1)
-                    shortest_delivery_time = delivery_time.mapped('partner_id.name')
+                    #lấy ra tên nhà san xuất có thời gian thấp nhất
+                    shortest_delivery_time = self.env['product.supplierinfo'].search(
+                        [('product_tmpl_id' , '=' , int(r.product_id.product_tmpl_id)),('price','=',min_price)], order='delay asc' , limit=1).mapped('partner_id.name')
                     r.supplier = ''.join(shortest_delivery_time)
                 else:
                     r.supplier = ''.join(price_supplier)

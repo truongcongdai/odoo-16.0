@@ -10,8 +10,7 @@ class IndicatorEvaluationReport(models.Model):
     def _compute_actual_revenue(self):
         for rec in self:
             if rec.sale_team:
-                amount_untaxed_opportunity = self.env['sale.order'].search(
-                    [('team_id', 'in', rec.sale_team.mapped('id'))])
+                amount_untaxed_opportunity = self.env['sale.order'].search([('team_id', 'in', rec.sale_team.mapped('id'))])
                 amount_untaxed = amount_untaxed_opportunity.mapped('amount_untaxed')
                 rec.actual_revenue = sum(amount_untaxed)
 
