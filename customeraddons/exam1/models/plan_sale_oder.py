@@ -32,24 +32,24 @@ class PlanSaleOder(models.Model):
             if self.is_confirm:
                 if self.approve_id.approver:
                     self.state = 'approve'
-                    self.message_post(subject='Approve New Plan', body=mess_approve)
+                    self.message_post(subject='Phê duyệt kế hoạch mới', body=mess_approve)
                 else:
                     raise UserError('Vui lòng viết người phê duyệt của bạn.')
             else:
                 raise UserError('Không thể xác nhận phê duyệt này. Vui lòng kiểm tra dữ liệu của bạn.')
         else:
-            raise UserError('người dùng chưa gửi yêu cầu')
+            raise UserError('người dùng chưa gửi yêu cầu duyệt')
     def btn_confirm_refuse(self):
         mess_refuse = "Kế hoạch mới của %s đã bị từ chối vào %s" % (self.create_uid.name, fields.Datetime.now())
         if self.state == 'send':
             if not self.is_confirm:
                 self.state ='refuse'
                 self.approve_id.approver_status='not approved yet'
-                self.message_post(subject='Refuse New Plan', body=mess_refuse)
+                self.message_post(subject='Từ chối kế hoạch mới', body=mess_refuse)
             else:
                 raise UserError('Không thể xác nhận phê duyệt này. Vui lòng kiểm tra dữ liệu của bạn.')
         else:
-            raise UserError('người dùng chưa gửi yêu cầu')
+            raise UserError('người dùng chưa gửi yêu cầu duyệt')
     #chỉ người tạo mới có thể nhìn thấy nút send
     @api.depends('create_uid')
     def _compute_check_send(self):

@@ -9,4 +9,4 @@ class InheritSaleOrder(models.Model):
         if self.plan_sale_order_id and self.plan_sale_order_id.is_confirm == True:
             return super(InheritSaleOrder, self).action_confirm()
         else:
-            raise ValidationError('The business plan has not been added or approved yet')
+            raise ValidationError('Kế hoạch kinh doanh chưa được bổ sung hoặc phê duyệt')

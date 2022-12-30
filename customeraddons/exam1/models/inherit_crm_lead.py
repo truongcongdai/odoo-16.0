@@ -36,7 +36,7 @@ class CrmLead(models.Model):
     @api.constrains('minimum_revenue')
     def _check_minimum_revenue(self):
         if self.minimum_revenue <= 0:
-            raise ValidationError('Minimum revenue > 0')
+            raise ValidationError('Doanh thu tối thiểu phải lớn hơn 0')
 
     #chỉ assign cho nhân viên cùng nhóm còn leader assign all
     def _onchange_user_id(self):

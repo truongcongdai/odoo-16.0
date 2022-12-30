@@ -21,5 +21,5 @@ class SalesTeam(models.Model):
     def _check_month(self):
         for r in self:
             if r.january <= 0 or r.february <= 0 or r.march <= 0 or r.april <= 0 or r.april <= 0 or r.may<= 0 or r.june <= 0 or r.july <= 0 or r.august <= 0 or r.september <= 0 or r.october <= 0 or r.november <= 0:
-                raise ValidationError('values > 0')
+                raise ValidationError('giá trị phải lớn 0')
 

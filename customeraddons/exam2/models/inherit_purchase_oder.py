@@ -24,12 +24,12 @@ class InheritPurchaseOrder(models.Model):
                         if check_group:
                             return super(InheritPurchaseOrder, self).button_confirm()
                         else:
-                            raise ValidationError("The limit has been exceeded")
+                            raise ValidationError("Đã vượt quá giới hạn")
         else:
-            raise ValidationError("Account has no purchase limit")
+            raise ValidationError("Tài khoản không có giới hạn mua hàng")
 
     def btn_send(self):
-        mess_send = "Confirmation request sent on %s" %(fields.Datetime.now())
+        mess_send = "Yêu cầu xác nhận được gửi vào %s" %(fields.Datetime.now())
         self.message_post(subject='Purchase Order New', body=mess_send)
         self.check_send = True
 

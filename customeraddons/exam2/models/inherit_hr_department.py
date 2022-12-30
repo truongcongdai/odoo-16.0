@@ -10,7 +10,7 @@ class InheritHrDepartment(models.Model):
     @api.constrains('spending_limit_month')
     def _check_spending_limit_month(self):
         if self.spending_limit_month <= 0:
-            raise ValidationError('Spending Limit Month must > 0')
+            raise ValidationError('Giới hạn chi tiêu tháng phải lớn hơn 0')
     #Tính tổng doanh thu thực tế
     def _compute_actual_revenue(self):
         for rec in self:
