@@ -30,7 +30,7 @@
                         <field name="name" attrs="{'readonly':[('state', 'in', ('send', 'approve'))]}"/>
                         <field name="quotation" attrs="{'readonly':[('state', 'in', ('send', 'approve'))]}"/>
                         <field name="content" attrs="{'readonly':[('state', 'in', ('send', 'approve'))]}"/>
-                        <field name="check_send" />
+                        <field name="check_send" invisible="1"/>
                     </group>
                     <notebook>
                         <page string="Approver List">

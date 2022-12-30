@@ -28,22 +28,28 @@ class PlanSaleOder(models.Model):
             raise UserError('Cannot send this approver')
     def btn_confirm_approve(self):
         mess_approve = "The new plan of %s has been approved on %s" % (self.create_uid.name, fields.Datetime.now())
-        if self.is_confirm:
-            if self.approve_id.approver:
-                self.state = 'approve'
-                self.message_post(subject='Approve New Plan', body=mess_approve)
+        if self.state == 'send':
+            if self.is_confirm:
+                if self.approve_id.approver:
+                    self.state = 'approve'
+                    self.message_post(subject='Approve New Plan', body=mess_approve)
+                else:
+                    raise UserError('Please write your approvers.')
             else:
-                raise UserError('Please write your approvers.')
+                raise UserError('Cannot confirm this approve. Please check your data.')
         else:
-            raise UserError('Cannot confirm this approve. Please check your data.')
+            raise UserError('user has not send')
     def btn_confirm_refuse(self):
         mess_refuse = "The new plan of %s has been refused on %s" % (self.create_uid.name, fields.Datetime.now())
-        if not self.is_confirm:
-            self.state ='refuse'
-            self.approve_id.approver_status='not approved yet'
-            self.message_post(subject='Refuse New Plan', body=mess_refuse)
+        if self.state == 'send':
+            if not self.is_confirm:
+                self.state ='refuse'
+                self.approve_id.approver_status='not approved yet'
+                self.message_post(subject='Refuse New Plan', body=mess_refuse)
+            else:
+                raise UserError('Cannot confirm this approve. Please check your data.')
         else:
-            raise UserError('Cannot confirm this approve. Please check your data.')
+            raise UserError('user has not send')
     #chỉ người tạo mới có thể nhìn thấy nút send
     @api.depends('create_uid')
     def _compute_check_send(self):
