@@ -33,7 +33,7 @@ class InheritPurchaseOrder(models.Model):
         mess_send = "Yêu cầu xác nhận được gửi vào %s" %(fields.Datetime.now())
         self.message_post(subject='Đơn đặt hàng Mới', body=mess_send)
         self.check_send = True
-    #nếu tài khoản hiện tại thuộc nhóm người dùng thì sẽ ẩn nút send to account
+    #nếu tài khoản hiện tại thuộc nhóm kế toán thì sẽ ẩn nút send to account
     def _compute_is_send(self):
         self.is_send = False
         if self.user_has_groups('exam2.group_accountant_staff'):
