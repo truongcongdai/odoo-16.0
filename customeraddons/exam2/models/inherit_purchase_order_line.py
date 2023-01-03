@@ -5,7 +5,7 @@ class InheritPurchaseOrderLine(models.Model):
 
     supplier = fields.Char(string="Supplier",compute='_compute_supplier',store=True)
     product_id = fields.Many2one('product.product', domain=[('purchase_oke','=',True)], string="Product", index='btree_not_null')
-
+    #tìm supplier có gía nhỏ nhất
     @api.depends('product_id')
     def _compute_supplier(self):
         for r in self:

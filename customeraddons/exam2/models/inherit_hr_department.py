@@ -5,7 +5,7 @@ class InheritHrDepartment(models.Model):
 
     spending_limit_month = fields.Float(string="Spending Limit Month")
     actual_revenue = fields.Float(string='Actual Revenue', compute='_compute_actual_revenue')
-    create_month = fields.Integer('Create Month', compute='_compute_create_month')
+    create_month = fields.Integer(string='Create Month', compute='_compute_create_month',store=True)
     #kiểm tra spending_limit_month nếu < 0 thì raise lỗi
     @api.constrains('spending_limit_month')
     def _check_spending_limit_month(self):

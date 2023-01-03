@@ -24,7 +24,7 @@ class ReportIndicatorEvaluation(models.TransientModel):
                 'domain': [('sale_team', 'in', sale_teams_id), ('month', '=', self.month)],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
-        elif self.month:
+        else:
             context = {
                 'name':  _("Detail Report"),
                 'view_mode': 'tree',

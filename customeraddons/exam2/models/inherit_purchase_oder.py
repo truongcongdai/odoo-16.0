@@ -4,8 +4,6 @@ class InheritPurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
     department = fields.Many2one('hr.department', required=True, string='Department')
-    check_send = fields.Boolean()
-    is_send = fields.Boolean(compute='_compute_is_send')
     #ghi de button_confirm
     def button_confirm(self):
         #lấy id của người dùng hiện
@@ -25,18 +23,6 @@ class InheritPurchaseOrder(models.Model):
                         if check_group:
                             return super(InheritPurchaseOrder, self).button_confirm()
                         else:
-                            raise ValidationError("Đã vượt quá giới hạn")
+                            raise ValidationError("Đã vượt quá giới hạn xin vui lòng tạo activity cho người dùng thuộc nhóm kế toán vào xác nhận")
         else:
             raise ValidationError("Tài khoản không có giới hạn mua hàng")
-    #gửi thông báo đến người dùng. ấn gửi 1 lần nút send to account sẽ bị ẩn 
-    def btn_send(self):
-        mess_send = "Yêu cầu xác nhận được gửi vào %s" %(fields.Datetime.now())
-        self.message_post(subject='Đơn đặt hàng Mới', body=mess_send)
-        self.check_send = True
-    #nếu tài khoản hiện tại thuộc nhóm kế toán thì sẽ ẩn nút send to account
-    def _compute_is_send(self):
-        self.is_send = False
-        if self.user_has_groups('exam2.group_accountant_staff'):
-            self.is_send = True
-
-

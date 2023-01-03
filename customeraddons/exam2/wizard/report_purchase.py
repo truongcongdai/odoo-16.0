@@ -11,15 +11,15 @@ class ReportPurchase(models.TransientModel):
     department = fields.Many2many('hr.department', string="Department")
 
     def btn_confirm(self):
-        department_name = self.department.mapped('name')
         if self.month and self.department:
+            department_name = self.department.mapped('name')
             context = {
                 'name': _("Detail Report"),
                 'view_mode': 'tree',
-                'res_model':'hr.department',
-                'type':'ir.actions.act_window',
+                'res_model': 'hr.department',
+                'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('hr.view_department_tree').id,
-                'target':'current',
+                'target': 'current',
                 'domain': [('name','in',department_name),('create_month', '=', self.month)],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
@@ -27,13 +27,14 @@ class ReportPurchase(models.TransientModel):
         else:
             context = {
                 'name': _('Detail Report'),
-                'view_mode':'tree',
-                'res_model':'hr.department',
-                'type':'ir.actions.act_window',
+                'view_mode': 'tree',
+                'res_model': 'hr.department',
+                'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('hr.view_department_tree').id,
-                'target':'current',
+                'target': 'current',
                 'domain': [('create_month', '=',self.month)],
                 'context':{'create': False, 'edit': False, 'delete': False}
             }
+        print(context)
         return context
 
