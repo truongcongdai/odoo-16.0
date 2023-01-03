@@ -5,7 +5,6 @@
         <field name="model">crm.team</field>
         <field name="inherit_id" ref="sales_team.crm_team_view_form" />
         <field name="arch" type="xml">
-<!--            <field name="name"/>-->
             <xpath expr="//page[@name='members_users']" position="before">
                 <page string="chỉ tiêu doanh số theo tháng(trước VAT)" groups="exam1.group_lead_employee">
                     <group>
