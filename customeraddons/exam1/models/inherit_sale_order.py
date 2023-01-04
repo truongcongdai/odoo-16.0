@@ -8,7 +8,7 @@ class InheritSaleOrder(models.Model):
 
     # Ghi đè kiểm tra kế hoạch đã thêm và kế hoạch đã được phê duyệt
     def action_confirm(self):
-        if self.plan_sale_order_id and self.plan_sale_order_id.is_confirm == True:
+        if self.plan_sale_order_id and self.plan_sale_order_id.state == 'approve':
             return super(InheritSaleOrder, self).action_confirm()
         else:
             raise ValidationError('Kế hoạch kinh doanh chưa được bổ sung hoặc phê duyệt')
