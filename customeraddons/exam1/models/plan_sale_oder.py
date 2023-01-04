@@ -17,8 +17,7 @@ class PlanSaleOder(models.Model):
         self.approve_id.approver_status = 'not approved yet'
 
     def btn_send(self):
-        mess_send = 'kế hoạch mới đã được gửi đến approve vào ngày %s . Tạo bởi %s' % (
-        fields.Datetime.now(), self.create_uid.name)
+        mess_send = 'kế hoạch mới đã được gửi đến approve vào ngày %s . Tạo bởi %s' % (fields.Datetime.now(), self.create_uid.name)
         if self.state == 'new' or self.state == 'refuse':
             if self.approve_id.approver:
                 self.state = 'send'
