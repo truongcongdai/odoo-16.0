@@ -1,12 +1,12 @@
 {
-    'name':'API-Report',
-    'sumamary':"""API-Report""",
-    'description':"""Long description of module's purpose""",
-    'author':"Dai",
-    'website':"https://www.yourcompany.com",
+    'name': 'API-Report',
+    'sumamary': """API-Report""",
+    'description': """Long description of module's purpose""",
+    'author': "Dai",
+    'website': "https://www.yourcompany.com",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base','exam1','exam2','mail'],
+    'depends': ['base', 'exam1', 'exam2', 'mail'],
     'data': [
         'security/ir.model.access.csv',
         'data/sales_purchase_cron.xml',

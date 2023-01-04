@@ -1,5 +1,6 @@
-from odoo import models, fields , api
+from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+
 
 class CrmLead(models.Model):
     _inherit = 'crm.lead'
@@ -25,28 +26,29 @@ class CrmLead(models.Model):
             if rec.create_date:
                 rec.create_month = rec.create_date.month
 
-    #check priority = very high va tk có thuộc nhóm leader
+    # check priority = very high va tk có thuộc nhóm leader
     @api.depends('priority')
     def _compute_check_priority(self):
         for r in self:
             r.check_priority = False
             if r.priority == '3' and not r.user_has_groups('exam1.group_lead_employee'):
                 r.check_priority = True
-    #Kiểm tra minimum_revenue nếu nhỏ hơn 0 thì raise lỗi
+
+    # Kiểm tra minimum_revenue nếu nhỏ hơn 0 thì raise lỗi
     @api.constrains('minimum_revenue')
     def _check_minimum_revenue(self):
         if self.minimum_revenue <= 0:
             raise ValidationError('Doanh thu tối thiểu phải lớn hơn 0')
 
-    #chỉ assign cho nhân viên cùng nhóm còn leader assign all
+    # chỉ assign cho nhân viên cùng nhóm còn leader assign all
     def _onchange_user_id(self):
         current_user_id = self.env.uid
-        group_staff_id = self.env['crm.team.member'].search([('user_id','=',current_user_id)]).crm_team_id.id
-        sales_staff_in_group = self.env['crm.team.member'].search([('crm_team_id','=',group_staff_id)]).user_id.ids
+        group_staff_id = self.env['crm.team.member'].search([('user_id', '=', current_user_id)]).crm_team_id.id
+        sales_staff_in_group = self.env['crm.team.member'].search([('crm_team_id', '=', group_staff_id)]).user_id.ids
         if not self.user_has_groups('exam1.group_lead_employee'):
             return [('id', 'in', sales_staff_in_group)]
 
     user_id = fields.Many2one(
         'res.users', string='Salesperson', default=lambda self: self.env.user,
-        domain="['&', ('share', '=', False), ('company_ids', 'in', user_company_ids)]"and _onchange_user_id,
+        domain="['&', ('share', '=', False), ('company_ids', 'in', user_company_ids)]" and _onchange_user_id,
         check_company=True, index=True, tracking=True)

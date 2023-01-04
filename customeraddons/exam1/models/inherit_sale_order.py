@@ -1,5 +1,7 @@
 from odoo import fields, api, models
 from odoo.exceptions import ValidationError
+
+
 class InheritSaleOrder(models.Model):
     _inherit = 'sale.order'
     plan_sale_order_id = fields.Many2one('plan.sale.order', string='Plan Sale Order')

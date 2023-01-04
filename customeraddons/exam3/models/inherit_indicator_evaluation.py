@@ -1,9 +1,11 @@
 from odoo import models, fields, api
 from datetime import date
+
+
 class InheritIndicatorEvaluation(models.Model):
     _inherit = 'indicator.evaluation'
 
-    revenue_difference = fields.Float(string= 'Revenue Difference', compute='_compute_revenue_difference')
+    revenue_difference = fields.Float(string='Revenue Difference', compute='_compute_revenue_difference')
 
     def _compute_revenue_difference(self):
         current_month = date.today().month

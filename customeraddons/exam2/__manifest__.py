@@ -1,12 +1,12 @@
 {
-    'name':"Purchase",
-    'sumamary':"""Purchase""",
-    'description':"""Long description of module's purpose""",
-    'author':"Dai",
-    'website':"https://www.yourcompany.com",
+    'name': "Purchase",
+    'sumamary': """Purchase""",
+    'description': """Long description of module's purpose""",
+    'author': "Dai",
+    'website': "https://www.yourcompany.com",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base','purchase','hr'],
+    'depends': ['base', 'purchase', 'hr'],
     'data': [
         'security/groups.xml',
         'security/ir.model.access.csv',
@@ -15,7 +15,7 @@
         'views/limit_purchase_order.xml',
         'wizard/report_purchase.xml',
     ],
-    'demo':[
+    'demo': [
         'demo/inherit_hr_department_demo.xml'
     ]
 }
