@@ -6,9 +6,9 @@ class ApproverList(models.Model):
     _name = 'approver.list'
 
     def _selection_group(self):
-        # lấy ra record của accountant
-        groups_approve = self.env['res.groups'].search([('name', '=', 'Accountant')])
-        # lấy ra id trong res_partner của nhóm acoountant
+        # lấy ra record của approver(người phê duyệt)
+        groups_approve = self.env['res.groups'].search([('name', '=', 'Approver')])
+        # lấy ra id trong res_partner của nhóm approver
         res_users_id = groups_approve.users.mapped('partner_id').mapped('id')
         return [('id', 'in', res_users_id)]
 
@@ -39,7 +39,6 @@ class ApproverList(models.Model):
             if ([state == 'refuse'] for state in states):
                 self.sale_order_id.state = 'refuse'
                 self.sale_order_id.approve_id.approver_status = 'not approved yet'
-                # print(self.env.user.partner_id.name)
                 self.sale_order_id.message_post(subject='Từ chối kế hoạch mới', body=mess_refuse)
         else:
             raise UserError('người dùng chưa gửi yêu cầu duyệt')

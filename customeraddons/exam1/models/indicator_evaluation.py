@@ -1,12 +1,15 @@
 from odoo import models, fields, api
 
-
 class IndicatorEvaluationReport(models.Model):
     _name = 'indicator.evaluation'
 
     sale_team = fields.Many2one('crm.team', string="Nhóm bán hàng")
     actual_revenue = fields.Float(string="Doanh thu thực tế", compute="_compute_actual_revenue")
-    month = fields.Integer('Month', store=True)
+    # cr_month = fields.Integer('Month', store=True)
+    month = fields.Selection([('1', 'January'), ('2', 'February'), ('3', 'March'),
+                              ('4', 'April'), ('5', 'May'), ('6', 'June'), ('7', 'July'), ('8', 'August'),
+                              ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December')],
+                             string='Month', store=True)
     revenue_targets = fields.Float(string="Chỉ tiêu doanh thu", compute="_compute_revenue_targets", store=True)
 
     def _compute_actual_revenue(self):
@@ -28,4 +31,4 @@ class IndicatorEvaluationReport(models.Model):
                                                                      res.june, res.july, res.august,
                                                                      res.september, res.october,
                                                                      res.november, res.december))
-                rec.revenue_targets = month_sales[0][rec.month - 1]
+                rec.revenue_targets = month_sales[0][int(rec.month) - 1]
