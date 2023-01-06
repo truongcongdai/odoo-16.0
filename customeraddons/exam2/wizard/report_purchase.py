@@ -35,6 +35,5 @@ class ReportPurchase(models.TransientModel):
                 'domain': [('create_month', '=',self.month)],
                 'context':{'create': False, 'edit': False, 'delete': False}
             }
-        print(context)
         return context
 
