@@ -42,8 +42,11 @@ class CrmLead(models.Model):
 
     # chỉ assign cho nhân viên cùng nhóm còn leader assign all
     def _onchange_user_id(self):
+        # lấy ra id của người dùng hiện tại
         current_user_id = self.env.uid
+        # lấy ra id teamember của người dùng hiện tại
         group_staff_id = self.env['crm.team.member'].search([('user_id', '=', current_user_id)]).crm_team_id.id
+        # lấy ra những tài khoản của thuộc teamember của người dùng hiện tại
         sales_staff_in_group = self.env['crm.team.member'].search([('crm_team_id', '=', group_staff_id)]).user_id.ids
         if not self.user_has_groups('exam1.group_lead_employee'):
             return [('id', 'in', sales_staff_in_group)]

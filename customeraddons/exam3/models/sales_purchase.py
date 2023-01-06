@@ -11,7 +11,7 @@ class SalesPurchase(models.Model):
         res_users_id = accountant_group_record.users.mapped('partner_id').mapped('id')
         # lấy ra email của accountant
         email_accountant = self.env['res.partner'].search([('id', 'in', res_users_id)]).mapped('email')
-
+        # lấy ra all record của indicator evaluation
         indicator_evaluation_record = self.env['indicator.evaluation'].search([])
         records_sale = []
         for i in indicator_evaluation_record:
@@ -21,7 +21,7 @@ class SalesPurchase(models.Model):
                 tickets_sale['actual_revenue'] = i.actual_revenue
                 tickets_sale['revenue_difference'] = i.revenue_difference
                 records_sale.append(tickets_sale)
-
+        # lấy ra all record của hr department
         hr_department_record = self.env['hr.department'].search([])
         records_department = []
         for i in hr_department_record:
