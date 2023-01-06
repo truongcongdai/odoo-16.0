@@ -12,6 +12,7 @@ class PlanSaleOder(models.Model):
     approve_id = fields.One2many('approver.list', 'sale_order_id', string='Aprrover')
     check_send = fields.Boolean(compute='_compute_check_send')
 
+    # khi ấn btn new thì thiết lập state = 'new' và approver_status = 'not approved yed'
     def btn_new(self):
         self.state = 'new'
         self.approve_id.approver_status = 'not approved yet'

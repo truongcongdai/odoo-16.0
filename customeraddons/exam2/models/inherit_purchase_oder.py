@@ -17,20 +17,19 @@ class InheritPurchaseOrder(models.Model):
         purchase_limit_record = self.env['limit.purchase.order'].search([('name', '=', current_user)],
                                                                         order='order_limit DESC', limit=1)
         purchase_limit = purchase_limit_record.order_limit
-        # nếu có giới hạn mua hàng thì...không thì sẽ raise lỗi
-        if len(purchase_limit_record) > 0:
-            for r in self:
-                if r.amount_total:
-                    if r.amount_total <= purchase_limit:
-                        return super(InheritPurchaseOrder, self).button_confirm()
-                    else:
-                        # nếu tk không thuộc account thì sẽ raise validationerror
-                        if check_group:
+        # nếu tài khoản thuộc nhóm accountant thì cho confirm
+        if check_group:
+             return super(InheritPurchaseOrder, self).button_confirm()
+        else:
+            # nếu không phải tài khoản thuộc nhóm accountant mà có purchase_limit_order thì so sánh amount_total vs purchase_limit
+            # nếu nhỏ hơn thì cho confirm ngược lại raise lỗi
+            # ngược lại nếu kg purchase_limit_order thì raise lỗi
+            if len(purchase_limit_record) > 0:
+                for r in self:
+                    if r.amount_total:
+                        if r.amount_total <= purchase_limit:
                             return super(InheritPurchaseOrder, self).button_confirm()
                         else:
                             raise ValidationError("Đã vượt quá giới hạn xin vui lòng tạo activity cho người dùng thuộc nhóm kế toán vào xác nhận")
-        else:
-            if check_group:
-                return super(InheritPurchaseOrder, self).button_confirm()
             else:
                 raise ValidationError("Tài khoản không có giới hạn mua hàng")
