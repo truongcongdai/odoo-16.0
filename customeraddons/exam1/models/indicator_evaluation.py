@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 
+
 class IndicatorEvaluationReport(models.Model):
     _name = 'indicator.evaluation'
 

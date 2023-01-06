@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 class ApproverList(models.Model):
     _name = 'approver.list'
 
+    # chỉ show ra những tài khoản thuộc nhóm approver để được chọn trong approve_list
     def _selection_group(self):
         # lấy ra record của approver(người phê duyệt)
         groups_approve = self.env['res.groups'].search([('name', '=', 'Approver')])
